@@ -12,6 +12,6 @@ public class order {
 
     @Override 
     public String toString() {
-        return "Food Order: " + foodOrder + ", Dining Option: " + diningOption;
+        return foodOrder + ", Dining Option: " + diningOption;
     }
 }
