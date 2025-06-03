@@ -14,6 +14,9 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import java.util.LinkedList;
+import java.util.Queue;
+
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -24,9 +27,12 @@ import javax.swing.SwingConstants;
  *
  * @author dayso
  */
+
+
 public class MyFrame extends JFrame implements ActionListener {
       
-    
+    private Queue<order> orderQueue = new LinkedList<>();
+
     JPanel panelWelcome;
     JLabel welcomeText;
    
@@ -78,10 +84,20 @@ public class MyFrame extends JFrame implements ActionListener {
         
     JButton pansitcantonAddbtn;
     JButton pansitcantonSubbtn;
+
+    JButton submitButton;
     
     
     MyFrame(){
         
+
+        submitButton = new JButton("submit");
+        submitButton.setBounds(0, 350, 250, 50);
+        submitButton.setFocusable(false);
+        submitButton.setFont(new Font("Consolas", Font.PLAIN, 15));
+        submitButton.addActionListener(this);
+        
+
         coffeelist = new JCheckBox();
         coffeelist.setText("Coffee");
         coffeelist.setBounds(150,0,150,50);
@@ -259,7 +275,7 @@ public class MyFrame extends JFrame implements ActionListener {
         
         panelfoodsMenu = new JPanel();
         panelfoodsMenu.setBackground(Color.yellow);
-        panelfoodsMenu.setBounds(0,150,300,340);
+        panelfoodsMenu.setBounds(0,150,300,400);
         
         panelfoodsMenu.add(hamburgerAddbtn);
         panelfoodsMenu.add(hamburgerSubbtn);
@@ -288,6 +304,7 @@ public class MyFrame extends JFrame implements ActionListener {
         panelfoodsMenu.add(fruitsaladlist);
         panelfoodsMenu.add(pansitcantonlist);
         panelfoodsMenu.add(takeOut);
+        panelfoodsMenu.add(submitButton);
         
        
         panelfoodsMenu.setLayout(null);
@@ -376,6 +393,63 @@ public class MyFrame extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
+            
+        if(e.getSource() == submitButton) {
+
+            boolean isAnyFoodSelected = hamburgerlist.isSelected() || tacolist.isSelected() || pizzalist.isSelected() ||
+                    hotdoglist.isSelected() || fruitsaladlist.isSelected() || pansitcantonlist.isSelected();
+
+            boolean isDiningOptionSelected = dineIn.isSelected() || takeOut.isSelected();
+            
+            if(!isAnyFoodSelected || !isDiningOptionSelected) {
+                String message = "Please select at least";
+                if (isAnyFoodSelected) {
+                    message = "Please select a dining option.";
+                } else if (isDiningOptionSelected) {
+                    message = "Please select at least one food item.";
+                } else {
+                    message = "Please select at least one food item and a dining option.";
+                }
+                javax.swing.JOptionPane.showMessageDialog(this, message, "Selection Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            StringBuilder selectedFoods = new StringBuilder("Selected Foods: ");
+            if(hamburgerlist.isSelected()){
+                selectedFoods.append("Hamburger ");
+            }
+            if(tacolist.isSelected()){
+                selectedFoods.append("Taco ");
+            }
+            if(pizzalist.isSelected()){
+                selectedFoods.append("Pizza ");
+            }
+            if(hotdoglist.isSelected()){
+                selectedFoods.append("Hotdog ");
+            }
+            if(fruitsaladlist.isSelected()){
+                selectedFoods.append("Fruit Salad ");
+            }
+            if(pansitcantonlist.isSelected()){
+                selectedFoods.append("Pansit Canton ");
+            }
+            
+
+            StringBuilder selectedDrinks = new StringBuilder("Selected Drinks");
+            if
+
+
+            String diningOption = dineIn.isSelected() ? "Dine In" : "Take Out";
+            
+            order newOrder = new order(selectedFoods.toString().trim(), diningOption);
+
+            orderQueue.add(newOrder);
+
+            System.out.println("New Order Added: " + newOrder);
+            System.out.println("Current Queue: " + orderQueue);
+
+
+
         }
     }
+}
