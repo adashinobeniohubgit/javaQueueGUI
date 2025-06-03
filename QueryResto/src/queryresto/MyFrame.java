@@ -435,8 +435,7 @@ public class MyFrame extends JFrame implements ActionListener {
             }
             
 
-            StringBuilder selectedDrinks = new StringBuilder("Selected Drinks");
-            if
+            
 
 
             String diningOption = dineIn.isSelected() ? "Dine In" : "Take Out";
